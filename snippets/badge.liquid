@@ -1,0 +1,30 @@
+{%- comment -%}
+  Renders a badge element
+
+  Accepts:
+  - text: {String} Badge text (required)
+  - modifier: {String} Badge style modifier (optional)
+  - size: {String} Badge size: 'small', 'medium', 'large' (optional, default: 'medium')
+  - color: {String} Badge color override (optional)
+
+  Usage:
+  {% render 'badge', text: 'Most Popular', modifier: 'featured' %}
+  {% render 'badge', text: 'Sale', modifier: 'sale', size: 'small' %}
+{%- endcomment -%}
+
+{%- assign badge_class = 'badge' -%}
+
+{%- if modifier != blank -%}
+  {%- assign badge_class = badge_class | append: ' badge--' | append: modifier -%}
+{%- endif -%}
+
+{%- assign badge_size = size | default: 'medium' -%}
+{%- assign badge_class = badge_class | append: ' badge--' | append: badge_size -%}
+
+{%- if color != blank -%}
+  {%- assign badge_style = 'background-color: ' | append: color | append: ';' -%}
+{%- endif -%}
+
+<span class="{{ badge_class }}"{% if badge_style %} style="{{ badge_style }}"{% endif %}>
+  {{- text -}}
+</span>

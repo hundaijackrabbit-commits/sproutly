@@ -1,0 +1,244 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="cta color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="cta__content text-{{ section.settings.text_alignment }}">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="cta__heading h1">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      
+      {%- if section.settings.subheading != blank -%}
+        <p class="cta__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      
+      {%- if section.settings.text != blank -%}
+        <div class="cta__text rte">
+          {{ section.settings.text }}
+        </div>
+      {%- endif -%}
+      
+      {%- if section.settings.button_label != blank -%}
+        <div class="cta__buttons">
+          {% render 'cta-button',
+            label: section.settings.button_label,
+            link: section.settings.button_link,
+            style: section.settings.button_style,
+            size: section.settings.button_size
+          %}
+          
+          {%- if section.settings.button_label_2 != blank -%}
+            {% render 'cta-button',
+              label: section.settings.button_label_2,
+              link: section.settings.button_link_2,
+              style: section.settings.button_style_2,
+              size: section.settings.button_size
+            %}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+      
+      {%- if section.settings.show_tier_links -%}
+        <div class="cta__tier-links">
+          <div class="cta__tier-links-wrapper">
+            <a href="{{ section.settings.tier_1_link | default: '/products/starter-kit' }}" class="cta__tier-link">
+              {{ settings.tier_1_title | default: 'Starter Kit' }}
+            </a>
+            <a href="{{ section.settings.tier_2_link | default: '/products/7-day-system' }}" class="cta__tier-link cta__tier-link--featured">
+              {{ settings.tier_2_title | default: '7-Day System' }}
+              <span class="cta__tier-badge">{{ section.settings.featured_badge_text | default: 'Most Popular' }}</span>
+            </a>
+            <a href="{{ section.settings.tier_3_link | default: '/products/smart-system' }}" class="cta__tier-link">
+              {{ settings.tier_3_title | default: 'Smart System' }}
+            </a>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Call to Action",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Start Growing Today"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Choose the perfect system for your lifestyle"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "default": "center",
+      "options": [
+        {"value": "left", "label": "Left"},
+        {"value": "center", "label": "Center"},
+        {"value": "right", "label": "Right"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Primary button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop All Systems"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "default": "primary",
+      "options": [
+        {"value": "primary", "label": "Primary"},
+        {"value": "secondary", "label": "Secondary"},
+        {"value": "tertiary", "label": "Tertiary"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Secondary button"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Second button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Second button link"
+    },
+    {
+      "type": "select",
+      "id": "button_style_2",
+      "label": "Second button style",
+      "default": "secondary",
+      "options": [
+        {"value": "primary", "label": "Primary"},
+        {"value": "secondary", "label": "Secondary"},
+        {"value": "tertiary", "label": "Tertiary"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "button_size",
+      "label": "Button size",
+      "default": "medium",
+      "options": [
+        {"value": "small", "label": "Small"},
+        {"value": "medium", "label": "Medium"},
+        {"value": "large", "label": "Large"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Tier links"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tier_links",
+      "label": "Show quick tier links",
+      "default": false
+    },
+    {
+      "type": "url",
+      "id": "tier_1_link",
+      "label": "Tier 1 link"
+    },
+    {
+      "type": "url",
+      "id": "tier_2_link",
+      "label": "Tier 2 link"
+    },
+    {
+      "type": "url",
+      "id": "tier_3_link",
+      "label": "Tier 3 link"
+    },
+    {
+      "type": "text",
+      "id": "featured_badge_text",
+      "label": "Featured tier badge text",
+      "default": "Most Popular"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "accent-1",
+      "options": [
+        {"value": "accent-1", "label": "Accent 1"},
+        {"value": "accent-2", "label": "Accent 2"},
+        {"value": "background-1", "label": "Background 1"},
+        {"value": "background-2", "label": "Background 2"},
+        {"value": "inverse", "label": "Inverse"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Call to Action"
+    }
+  ]
+}
+{% endschema %}

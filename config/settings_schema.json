@@ -1,0 +1,664 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Sproutly",
+    "theme_version": "1.0.0",
+    "theme_author": "Sproutly Team",
+    "theme_documentation_url": "https://sproutly.com/theme-docs",
+    "theme_support_url": "https://sproutly.com/support"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brand Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary Color",
+        "default": "#2E7D32"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary Color",
+        "default": "#66BB6A"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent Color",
+        "default": "#4CAF50"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background Color",
+        "default": "#F9FAF9"
+      },
+      {
+        "type": "color",
+        "id": "color_foreground",
+        "label": "Text Color",
+        "default": "#1B1B1B"
+      },
+      {
+        "type": "header",
+        "content": "Gradient backgrounds"
+      },
+      {
+        "type": "color_background",
+        "id": "gradient_background_1",
+        "label": "Background gradient"
+      },
+      {
+        "type": "color_background",
+        "id": "gradient_background_2",
+        "label": "Background gradient 2"
+      },
+      {
+        "type": "color_background",
+        "id": "gradient_accent_1",
+        "label": "Accent gradient"
+      },
+      {
+        "type": "color_background",
+        "id": "gradient_accent_2",
+        "label": "Accent gradient 2"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_header_font",
+        "label": "Heading font",
+        "default": "assistant_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "min": 100,
+        "max": 150,
+        "step": 5,
+        "unit": "%",
+        "label": "Heading size",
+        "default": 120
+      },
+      {
+        "type": "header",
+        "content": "Body text"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Body font",
+        "default": "assistant_n4"
+      },
+      {
+        "type": "range",
+        "id": "body_scale",
+        "min": 100,
+        "max": 120,
+        "step": 5,
+        "unit": "%",
+        "label": "Body text size",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Page width"
+      },
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 1000,
+        "max": 1600,
+        "step": 100,
+        "unit": "px",
+        "label": "Maximum page width",
+        "default": 1200
+      },
+      {
+        "type": "header",
+        "content": "Spacing"
+      },
+      {
+        "type": "range",
+        "id": "spacing_sections",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Section spacing",
+        "default": 60
+      },
+      {
+        "type": "header",
+        "content": "Grid"
+      },
+      {
+        "type": "range",
+        "id": "spacing_grid_horizontal",
+        "min": 4,
+        "max": 40,
+        "step": 4,
+        "unit": "px",
+        "label": "Grid horizontal spacing",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "spacing_grid_vertical",
+        "min": 4,
+        "max": 40,
+        "step": 4,
+        "unit": "px",
+        "label": "Grid vertical spacing",
+        "default": 20
+      }
+    ]
+  },
+  {
+    "name": "Cards",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Card layout"
+      },
+      {
+        "type": "range",
+        "id": "card_image_padding",
+        "min": 0,
+        "max": 20,
+        "step": 2,
+        "unit": "px",
+        "label": "Image padding",
+        "default": 0
+      },
+      {
+        "type": "select",
+        "id": "card_text_alignment",
+        "label": "Text alignment",
+        "default": "left",
+        "options": [
+          {"value": "left", "label": "Left"},
+          {"value": "center", "label": "Center"},
+          {"value": "right", "label": "Right"}
+        ]
+      },
+      {
+        "type": "select",
+        "id": "card_color_scheme",
+        "label": "Color scheme",
+        "default": "background-1",
+        "options": [
+          {"value": "accent-1", "label": "Accent 1"},
+          {"value": "accent-2", "label": "Accent 2"},
+          {"value": "background-1", "label": "Background 1"},
+          {"value": "background-2", "label": "Background 2"},
+          {"value": "inverse", "label": "Inverse"}
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Card border"
+      },
+      {
+        "type": "range",
+        "id": "card_border_thickness",
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "card_border_opacity",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "%",
+        "label": "Border opacity",
+        "default": 10
+      },
+      {
+        "type": "range",
+        "id": "card_corner_radius",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "Corner radius",
+        "default": 8
+      },
+      {
+        "type": "header",
+        "content": "Card shadow"
+      },
+      {
+        "type": "range",
+        "id": "card_shadow_opacity",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "%",
+        "label": "Shadow opacity",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "card_shadow_horizontal_offset",
+        "min": -40,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "Horizontal shadow offset",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "card_shadow_vertical_offset",
+        "min": -40,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "Vertical shadow offset",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "card_shadow_blur",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "Shadow blur",
+        "default": 0
+      }
+    ]
+  },
+  {
+    "name": "Buttons",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Button border"
+      },
+      {
+        "type": "range",
+        "id": "buttons_border_thickness",
+        "min": 0,
+        "max": 12,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 1
+      },
+      {
+        "type": "range",
+        "id": "buttons_border_opacity",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "%",
+        "label": "Border opacity",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "buttons_radius",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "Corner radius",
+        "default": 6
+      },
+      {
+        "type": "header",
+        "content": "Button shadow"
+      },
+      {
+        "type": "range",
+        "id": "buttons_shadow_opacity",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "%",
+        "label": "Shadow opacity",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "buttons_shadow_horizontal_offset",
+        "min": -12,
+        "max": 12,
+        "step": 1,
+        "unit": "px",
+        "label": "Horizontal shadow offset",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "buttons_shadow_vertical_offset",
+        "min": -12,
+        "max": 12,
+        "step": 1,
+        "unit": "px",
+        "label": "Vertical shadow offset",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "buttons_shadow_blur",
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "label": "Shadow blur",
+        "default": 0
+      }
+    ]
+  },
+  {
+    "name": "Form inputs",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Input border"
+      },
+      {
+        "type": "range",
+        "id": "inputs_border_thickness",
+        "min": 0,
+        "max": 12,
+        "step": 1,
+        "unit": "px",
+        "label": "Border thickness",
+        "default": 1
+      },
+      {
+        "type": "range",
+        "id": "inputs_border_opacity",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "%",
+        "label": "Border opacity",
+        "default": 55
+      },
+      {
+        "type": "range",
+        "id": "inputs_radius",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "Corner radius",
+        "default": 4
+      },
+      {
+        "type": "header",
+        "content": "Input shadow"
+      },
+      {
+        "type": "range",
+        "id": "inputs_shadow_opacity",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "%",
+        "label": "Shadow opacity",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "inputs_shadow_horizontal_offset",
+        "min": -12,
+        "max": 12,
+        "step": 1,
+        "unit": "px",
+        "label": "Horizontal shadow offset",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "inputs_shadow_vertical_offset",
+        "min": -12,
+        "max": 12,
+        "step": 1,
+        "unit": "px",
+        "label": "Vertical shadow offset",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "inputs_shadow_blur",
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "label": "Shadow blur",
+        "default": 0
+      }
+    ]
+  },
+  {
+    "name": "Badges",
+    "settings": [
+      {
+        "type": "range",
+        "id": "badge_corner_radius",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "Corner radius",
+        "default": 40
+      }
+    ]
+  },
+  {
+    "name": "Sproutly Tiers",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Tier System Configuration"
+      },
+      {
+        "type": "text",
+        "id": "tier_1_title",
+        "label": "Tier 1 Title",
+        "default": "Starter Kit",
+        "info": "Entry-level microgreens system"
+      },
+      {
+        "type": "text",
+        "id": "tier_2_title",
+        "label": "Tier 2 Title",
+        "default": "7-Day Grow System",
+        "info": "Most popular option - recommended tier"
+      },
+      {
+        "type": "text",
+        "id": "tier_3_title",
+        "label": "Tier 3 Title",
+        "default": "Smart Grow System",
+        "info": "Premium automated growing system"
+      },
+      {
+        "type": "select",
+        "id": "featured_tier",
+        "label": "Featured Tier",
+        "default": "tier_2",
+        "options": [
+          {"value": "tier_1", "label": "Tier 1"},
+          {"value": "tier_2", "label": "Tier 2"},
+          {"value": "tier_3", "label": "Tier 3"}
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_tier_badges",
+        "label": "Show tier badges",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Animations",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Hover effects"
+      },
+      {
+        "type": "select",
+        "id": "animations_hover_elements",
+        "label": "Hover effect",
+        "default": "hover-1",
+        "options": [
+          {"value": "none", "label": "None"},
+          {"value": "hover-1", "label": "Subtle"},
+          {"value": "hover-2", "label": "Moderate"},
+          {"value": "hover-3", "label": "Strong"}
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Reveal animations"
+      },
+      {
+        "type": "checkbox",
+        "id": "animations_reveal_on_scroll",
+        "label": "Reveal sections on scroll",
+        "default": true,
+        "info": "Sections reveal as they enter the viewport"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart type",
+        "default": "drawer",
+        "options": [
+          {"value": "drawer", "label": "Drawer"},
+          {"value": "page", "label": "Page"}
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_cart_note",
+        "label": "Enable cart notes",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_drawer_collection",
+        "label": "Show collection list",
+        "default": false,
+        "info": "Show a list of collections in the cart drawer"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social media accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter",
+        "info": "https://twitter.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "info": "https://facebook.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest",
+        "info": "https://pinterest.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "info": "http://instagram.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_link",
+        "label": "TikTok",
+        "info": "https://tiktok.com/@shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_link",
+        "label": "Tumblr",
+        "info": "https://shopify.tumblr.com"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat_link",
+        "label": "Snapchat",
+        "info": "https://www.snapchat.com/add/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "YouTube",
+        "info": "https://www.youtube.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_link",
+        "label": "Vimeo",
+        "info": "https://vimeo.com/shopify"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  }
+]

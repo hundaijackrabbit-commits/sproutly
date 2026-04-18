@@ -1,0 +1,233 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="faq color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- unless section.settings.heading == blank -%}
+      <div class="section-header text-center">
+        <h2 class="section-header__title h1">
+          {{ section.settings.heading }}
+        </h2>
+        {%- if section.settings.subheading != blank -%}
+          <p class="section-header__subtitle">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+
+    <div class="faq__wrapper">
+      <div class="faq__list" data-accordion>
+        {%- for block in section.blocks -%}
+          <div class="faq__item" data-accordion-item {{ block.shopify_attributes }}>
+            <button type="button" 
+                    class="faq__question" 
+                    data-accordion-trigger
+                    aria-expanded="{% if section.settings.open_first and forloop.first %}true{% else %}false{% endif %}"
+                    aria-controls="faq-answer-{{ section.id }}-{{ forloop.index }}">
+              <span class="faq__question-text">{{ block.settings.question }}</span>
+              <span class="faq__question-icon">
+                {% render 'icon', icon: 'chevron-down' %}
+              </span>
+            </button>
+            
+            <div class="faq__answer" 
+                 data-accordion-content
+                 id="faq-answer-{{ section.id }}-{{ forloop.index }}"
+                 {% unless section.settings.open_first and forloop.first %}hidden{% endunless %}>
+              <div class="faq__answer-content">
+                <div class="rte">
+                  {{ block.settings.answer }}
+                </div>
+                
+                {%- if block.settings.button_label != blank -%}
+                  <div class="faq__answer-button">
+                    <a href="{{ block.settings.button_link }}" class="button button--secondary">
+                      {{ block.settings.button_label | escape }}
+                    </a>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.contact_button_label != blank -%}
+        <div class="faq__contact text-center">
+          <p class="faq__contact-text">{{ section.settings.contact_text }}</p>
+          <a href="{{ section.settings.contact_button_link }}" class="button button--primary">
+            {{ section.settings.contact_button_label | escape }}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first question by default",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Contact section"
+    },
+    {
+      "type": "text",
+      "id": "contact_text",
+      "label": "Contact text",
+      "default": "Still have questions?"
+    },
+    {
+      "type": "text",
+      "id": "contact_button_label",
+      "label": "Contact button label",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "contact_button_link",
+      "label": "Contact button link",
+      "default": "/pages/contact"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "background-1",
+      "options": [
+        {"value": "accent-1", "label": "Accent 1"},
+        {"value": "accent-2", "label": "Accent 2"},
+        {"value": "background-1", "label": "Background 1"},
+        {"value": "background-2", "label": "Background 2"},
+        {"value": "inverse", "label": "Inverse"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How long does it take to grow microgreens?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Most microgreens are ready to harvest in 7-14 days, depending on the variety. Our systems are optimized for a 7-day growing cycle.</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "How long does it take to grow microgreens?",
+            "answer": "<p>Most microgreens are ready to harvest in 7-14 days, depending on the variety. Our systems are optimized for a 7-day growing cycle for maximum freshness.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "What's included in each tier?",
+            "answer": "<p><strong>Starter Kit:</strong> Basic growing tray, seed starter pack, instructions<br><strong>7-Day System:</strong> Multiple trays, premium seeds, detailed guide, tools<br><strong>Smart System:</strong> Automated watering, LED lights, app control, premium seeds</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Do I need special equipment or space?",
+            "answer": "<p>No special equipment needed! Our systems work on any flat surface with indirect light. The Smart System includes everything needed for automated growing.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How much can I harvest?",
+            "answer": "<p>Each tray yields enough microgreens for 2-4 servings. The 7-Day System includes multiple trays for continuous harvesting throughout the week.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "What varieties can I grow?",
+            "answer": "<p>We offer seeds for popular varieties like arugula, radish, pea shoots, sunflower, and many more. Higher tiers include more seed variety packs.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

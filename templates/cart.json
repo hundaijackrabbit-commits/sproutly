@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "cart": {
+      "type": "main-cart",
+      "settings": {
+        "show_vendor": false,
+        "show_cart_note": false,
+        "color_scheme": "background-1"
+      }
+    },
+    "cart_upsell": {
+      "type": "cart-upsell",
+      "settings": {
+        "heading": "Complete Your Growing Setup",
+        "product_list": "",
+        "products_to_show": 3
+      }
+    }
+  },
+  "order": [
+    "cart",
+    "cart_upsell"
+  ]
+}

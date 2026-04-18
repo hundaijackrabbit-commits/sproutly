@@ -1,0 +1,247 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="testimonials color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- unless section.settings.heading == blank -%}
+      <div class="section-header text-center">
+        <h2 class="section-header__title h1">
+          {{ section.settings.heading }}
+        </h2>
+        {%- if section.settings.subheading != blank -%}
+          <p class="section-header__subtitle">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+
+    {%- if section.settings.layout == 'carousel' -%}
+      <div class="testimonials__carousel" data-carousel>
+        <div class="testimonials__track" data-carousel-track>
+          {%- for block in section.blocks -%}
+            <div class="testimonials__slide" data-carousel-slide {{ block.shopify_attributes }}>
+              {% render 'testimonial-card', 
+                quote: block.settings.quote,
+                author: block.settings.author,
+                author_title: block.settings.author_title,
+                author_image: block.settings.author_image,
+                star_rating: block.settings.star_rating,
+                show_stars: section.settings.show_stars,
+                tier_product: block.settings.tier_product
+              %}
+            </div>
+          {%- endfor -%}
+        </div>
+        
+        {%- if section.blocks.size > 1 -%}
+          <div class="testimonials__controls">
+            <button type="button" class="testimonials__button testimonials__button--prev" data-carousel-prev aria-label="{{ 'general.accessibility.previous' | t }}">
+              {% render 'icon', icon: 'chevron-left' %}
+            </button>
+            <button type="button" class="testimonials__button testimonials__button--next" data-carousel-next aria-label="{{ 'general.accessibility.next' | t }}">
+              {% render 'icon', icon: 'chevron-right' %}
+            </button>
+          </div>
+          
+          <div class="testimonials__dots" data-carousel-dots>
+            {%- for block in section.blocks -%}
+              <button type="button" class="testimonials__dot{% if forloop.first %} testimonials__dot--active{% endif %}" 
+                      data-carousel-dot="{{ forloop.index0 }}" 
+                      aria-label="{{ 'general.accessibility.slide_number' | t: number: forloop.index }}">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- else -%}
+      <div class="testimonials__grid grid grid--1-col grid--2-col-tablet grid--{{ section.settings.columns_desktop }}-col-desktop">
+        {%- for block in section.blocks -%}
+          <div class="testimonials__item" {{ block.shopify_attributes }}>
+            {% render 'testimonial-card',
+              quote: block.settings.quote,
+              author: block.settings.author,
+              author_title: block.settings.author_title,
+              author_image: block.settings.author_image,
+              star_rating: block.settings.star_rating,
+              show_stars: section.settings.show_stars,
+              tier_product: block.settings.tier_product
+            %}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "grid",
+      "options": [
+        {"value": "grid", "label": "Grid"},
+        {"value": "carousel", "label": "Carousel"}
+      ]
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Number of columns on desktop",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stars",
+      "label": "Show star ratings",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme", 
+      "default": "background-1",
+      "options": [
+        {"value": "accent-1", "label": "Accent 1"},
+        {"value": "accent-2", "label": "Accent 2"},
+        {"value": "background-1", "label": "Background 1"},
+        {"value": "background-2", "label": "Background 2"},
+        {"value": "inverse", "label": "Inverse"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Quote",
+          "default": "<p>The 7-Day Grow System has transformed how we eat fresh greens at home. So easy and the taste is incredible!</p>"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Sarah Johnson"
+        },
+        {
+          "type": "text",
+          "id": "author_title",
+          "label": "Author title",
+          "default": "Home Chef"
+        },
+        {
+          "type": "image_picker",
+          "id": "author_image",
+          "label": "Author image"
+        },
+        {
+          "type": "range",
+          "id": "star_rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star rating",
+          "default": 5
+        },
+        {
+          "type": "product",
+          "id": "tier_product",
+          "label": "Tier product mentioned",
+          "info": "Optional: link to the product they're reviewing"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>The 7-Day Grow System has transformed how we eat fresh greens at home. So easy and the taste is incredible!</p>",
+            "author": "Sarah Johnson",
+            "author_title": "Home Chef",
+            "star_rating": 5
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>I was skeptical at first, but now I have fresh microgreens every week. The Smart Grow System is worth every penny.</p>",
+            "author": "Michael Chen",
+            "author_title": "Health Enthusiast", 
+            "star_rating": 5
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>Perfect for beginners! The starter kit came with everything I needed and clear instructions.</p>",
+            "author": "Emma Rodriguez",
+            "author_title": "First-time Grower",
+            "star_rating": 4
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

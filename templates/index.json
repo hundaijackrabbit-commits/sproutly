@@ -1,0 +1,70 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "heading": "Grow Fresh Microgreens at Home",
+        "subheading": "From seed to harvest in just 7 days with our complete growing systems",
+        "button_label": "Shop Now",
+        "button_link": "/collections/all",
+        "image_desktop": "",
+        "image_mobile": "",
+        "text_alignment": "center",
+        "color_scheme": "background-1"
+      }
+    },
+    "how_it_works": {
+      "type": "how-it-works",
+      "settings": {
+        "heading": "How It Works",
+        "subheading": "Simple steps to fresh microgreens"
+      }
+    },
+    "tier_pricing": {
+      "type": "tier-pricing",
+      "settings": {
+        "heading": "Choose Your Growing System",
+        "subheading": "Perfect solutions for every lifestyle",
+        "show_comparison": true,
+        "featured_tier": "tier_2"
+      }
+    },
+    "product_comparison": {
+      "type": "product-comparison",
+      "settings": {
+        "heading": "Compare Our Systems",
+        "show_tier_badges": true
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "heading": "What Our Customers Say",
+        "show_stars": true
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "heading": "Frequently Asked Questions"
+      }
+    },
+    "email_capture": {
+      "type": "email-capture",
+      "settings": {
+        "heading": "Get Growing Tips & Updates",
+        "subheading": "Join our community of home growers",
+        "button_label": "Subscribe"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "how_it_works", 
+    "tier_pricing",
+    "product_comparison",
+    "testimonials",
+    "faq",
+    "email_capture"
+  ]
+}
