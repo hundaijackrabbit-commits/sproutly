@@ -1,0 +1,60 @@
+{%- comment -%}
+  Renders a testimonial card
+
+  Accepts:
+  - quote: {String} Testimonial quote (required)
+  - author: {String} Author name (required)
+  - author_title: {String} Author title or company
+  - author_image: {Object} Author image
+  - star_rating: {Number} Star rating out of 5
+  - show_stars: {Boolean} Whether to show star rating
+  - tier_product: {Object} Related tier product
+
+  Usage:
+  {% render 'testimonial-card', quote: quote, author: author, star_rating: 5 %}
+{%- endcomment -%}
+
+<div class="testimonial-card">
+  {%- if show_stars and star_rating -%}
+    <div class="testimonial-card__rating">
+      {%- for i in (1..5) -%}
+        <span class="testimonial-card__star{% if i <= star_rating %} testimonial-card__star--filled{% endif %}">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+          </svg>
+        </span>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <div class="testimonial-card__quote">
+    <div class="testimonial-card__quote-content rte">
+      {{ quote }}
+    </div>
+  </div>
+
+  <div class="testimonial-card__author">
+    {%- if author_image -%}
+      <div class="testimonial-card__author-image">
+        <img src="{{ author_image | image_url: width: 60 }}" 
+             alt="{{ author_image.alt | escape }}"
+             width="60" height="60" loading="lazy">
+      </div>
+    {%- endif -%}
+    
+    <div class="testimonial-card__author-info">
+      <div class="testimonial-card__author-name">{{ author }}</div>
+      {%- if author_title -%}
+        <div class="testimonial-card__author-title">{{ author_title }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if tier_product -%}
+    <div class="testimonial-card__product">
+      <a href="{{ tier_product.url }}" class="testimonial-card__product-link">
+        <small>Verified purchase: {{ tier_product.title }}</small>
+      </a>
+    </div>
+  {%- endif -%}
+</div>

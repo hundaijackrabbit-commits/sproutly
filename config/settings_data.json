@@ -55,12 +55,22 @@
     "sections": {
       "header": {
         "type": "header",
-        "settings": {}
+        "settings": {
+          "logo_text": "Sproutly",
+          "logo_width": 120
+        }
       },
       "footer": {
         "type": "footer", 
-        "settings": {}
+        "settings": {
+          "footer_description": "Empowering home growers to cultivate fresh, nutrient-dense microgreens in any space. From seed to harvest in just 7 days.",
+          "show_newsletter": true,
+          "newsletter_heading": "Stay Growing",
+          "newsletter_text": "Get weekly growing tips, new variety spotlights, and exclusive member discounts."
+        }
       }
-    }
+    },
+    "content_for_header_group": "",
+    "content_for_footer_group": ""
   }
 }

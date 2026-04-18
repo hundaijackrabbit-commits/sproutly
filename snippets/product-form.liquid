@@ -1,0 +1,82 @@
+{%- comment -%}
+  Renders product form for add to cart
+
+  Accepts:
+  - product: {Object} Product Liquid object
+  - show_pickup_availability: {Boolean} Show pickup availability (optional)
+  - button_text: {String} Custom button text (optional)
+
+  Usage:
+  {% render 'product-form', product: product %}
+{%- endcomment -%}
+
+{%- assign product_form_installment_id = 'product-form-installment-' | append: product.id -%}
+{%- assign product_form_id = 'product-form-' | append: section.id | append: '-' | append: product.id -%}
+
+<product-form class="product-form">
+  <div class="product-form__error-message-wrapper" role="alert" hidden>
+    <svg aria-hidden="true" focusable="false" class="icon icon-error" viewBox="0 0 13 13">
+      <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+      <circle cx="6.5" cy="6.5" r="2.5" fill="white" stroke="#EB001B" stroke-width="0.7"/>
+    </svg>
+    <span class="product-form__error-message"></span>
+  </div>
+
+  {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+    
+    <div class="product-form__buttons">
+      {%- liquid
+        assign check_against_inventory = true
+        if product.selected_or_first_available_variant.inventory_management != 'shopify' or  product.selected_or_first_available_variant.inventory_policy == 'continue'
+          assign check_against_inventory = false
+        endif
+        if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
+          assign quantity_rule_soldout = true
+        endif
+      -%}
+      
+      <button
+        type="submit"
+        name="add"
+        class="product-form__cart-submit button button--full-width{% if horizontal_quick_add %} button--secondary{% else %} button--primary{% endif %}"
+        {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %}disabled{% endif %}
+      >
+        <span>
+          {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- else -%}
+            {{ button_text | default: 'products.product.add_to_cart' | t }}
+          {%- endif -%}
+        </span>
+        <div class="loading-overlay__spinner hidden">
+          <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+          </svg>
+        </div>
+      </button>
+      
+      {%- if show_pickup_availability -%}
+        {{ 'component-pickup-availability.css' | asset_url | stylesheet_tag }}
+        <pickup-availability class="product__pickup-availabilities no-js-hidden"
+          {% if product.selected_or_first_available_variant.available and product.selected_or_first_available_variant.inventory_management == 'shopify' %}
+            available
+          {% endif %}
+          data-root-url="{{ routes.root_url }}"
+          data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+          data-has-only-default-variant="{{ product.has_only_default_variant }}"
+        >
+          <template>
+            <pickup-availability-preview class="pickup-availability-preview">
+              {% render 'icon-unavailable' %}
+              <div class="pickup-availability-info">
+                <p class="caption-large">{{ 'products.product.pickup_availability.unavailable' | t }}</p>
+                <button class="pickup-availability-button link link--text underlined-link">{{ 'products.product.pickup_availability.refresh' | t }}</button>
+              </div>
+            </pickup-availability-preview>
+          </template>
+        </pickup-availability>
+      {%- endif -%}
+    </div>
+  {%- endform -%}
+</product-form>
