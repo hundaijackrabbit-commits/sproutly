@@ -133,50 +133,7 @@
         "color_scheme": "background-1",
         "padding_top": 60,
         "padding_bottom": 60
-      },
-      "blocks": {
-        "testimonial_1": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "<p>I was skeptical at first, but the 7-Day System is incredible! I've been growing fresh microgreens for 3 months now. The taste is amazing and I save $60/month on grocery bills.</p>",
-            "author": "Sarah Chen",
-            "author_title": "Home Chef, San Francisco",
-            "star_rating": 5,
-            "tier_product": ""
-          }
-        },
-        "testimonial_2": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "<p>As a beginner, the Smart Grow Pro made everything automatic. I just add water once a week and harvest fresh greens daily. My kids love watching them grow!</p>",
-            "author": "Mike Rodriguez",
-            "author_title": "Busy Dad, New York",
-            "star_rating": 5,
-            "tier_product": ""
-          }
-        },
-        "testimonial_3": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "<p>Started with the basic Sprout Starter and was so impressed I upgraded to the 7-Day System. Now I grow 5 different varieties every week!</p>",
-            "author": "Emma Thompson",
-            "author_title": "Health Enthusiast, Seattle",
-            "star_rating": 5,
-            "tier_product": ""
-          }
-        },
-        "testimonial_4": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "<p>The nutrient density is off the charts! My energy levels have increased dramatically since adding fresh microgreens to every meal. Best investment ever.</p>",
-            "author": "David Kim",
-            "author_title": "Fitness Coach, Los Angeles",
-            "star_rating": 5,
-            "tier_product": ""
-          }
-        }
-      },
-      "block_order": ["testimonial_1", "testimonial_2", "testimonial_3", "testimonial_4"]
+      }
     },
     "faq": {
       "type": "faq",

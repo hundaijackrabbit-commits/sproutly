@@ -2,6 +2,60 @@
    SPROUTLY THEME BASE STYLES
    ========================================================================== */
 
+/* CSS Custom Properties
+   ========================================================================== */
+
+:root {
+  /* Brand Colors */
+  --color-primary: 46, 125, 50;
+  --color-secondary: 102, 187, 106;
+  --color-success: 102, 187, 106;
+  --color-background: 249, 250, 249;
+  --color-foreground: 27, 27, 27;
+  --color-text-primary: 27, 27, 27;
+  --color-text-secondary: 102, 102, 102;
+  
+  /* Background Schemes */
+  --color-background-1: 249, 250, 249;
+  --color-background-2: 255, 255, 255;
+  --color-accent-1: 46, 125, 50;
+  --color-accent-2: 102, 187, 106;
+  
+  /* Typography */
+  --font-body-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-heading-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-body-scale: 1.0;
+  --font-body-style: normal;
+  --font-body-weight: 400;
+  --font-heading-scale: 1.0;
+  --font-heading-style: normal;
+  --font-heading-weight: 600;
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-xxl: 4rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-pill: 2rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+  
+  /* Page Width */
+  --page-width: 120rem;
+  --page-width-margin: 2rem;
+}
+
 /* Reset and Base Styles
    ========================================================================== */
 
