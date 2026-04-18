@@ -1,0 +1,282 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="tier-pricing color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- unless section.settings.heading == blank -%}
+      <div class="section-header text-center">
+        <h2 class="section-header__title h1">
+          {{ section.settings.heading }}
+        </h2>
+        {%- if section.settings.subheading != blank -%}
+          <p class="section-header__subtitle">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+
+    <div class="tier-pricing__grid grid grid--1-col grid--2-col-tablet grid--3-col-desktop">
+      {%- for block in section.blocks -%}
+        {%- assign tier_featured = false -%}
+        {%- if settings.featured_tier == block.settings.tier_level -%}
+          {%- assign tier_featured = true -%}
+        {%- endif -%}
+        
+        <div class="tier-pricing__tier{% if tier_featured %} tier-pricing__tier--featured{% endif %}" {{ block.shopify_attributes }}>
+          {% render 'tier-card',
+            tier_level: block.settings.tier_level,
+            product: block.settings.product,
+            tier_title: block.settings.tier_title,
+            tier_subtitle: block.settings.tier_subtitle,
+            tier_description: block.settings.tier_description,
+            tier_features: block.settings.tier_features,
+            tier_badge: block.settings.tier_badge,
+            tier_badge_text: block.settings.tier_badge_text,
+            is_featured: tier_featured,
+            show_comparison: section.settings.show_comparison,
+            button_text: block.settings.button_text
+          %}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_comparison -%}
+      <div class="tier-pricing__comparison">
+        <div class="tier-comparison__toggle">
+          <button type="button" class="tier-comparison__button" aria-expanded="false" aria-controls="tier-comparison-table">
+            <span class="tier-comparison__button-text">Compare All Features</span>
+            {% render 'icon', icon: 'chevron-down' %}
+          </button>
+        </div>
+        
+        <div class="tier-comparison__table" id="tier-comparison-table" hidden>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th class="comparison-table__header">Features</th>
+                {%- for block in section.blocks -%}
+                  <th class="comparison-table__header comparison-table__header--tier">
+                    {{ block.settings.tier_title }}
+                  </th>
+                {%- endfor -%}
+              </tr>
+            </thead>
+            <tbody>
+              {%- assign all_features = '' -%}
+              {%- for block in section.blocks -%}
+                {%- assign features_array = block.settings.tier_features | split: ',' -%}
+                {%- for feature in features_array -%}
+                  {%- assign clean_feature = feature | strip -%}
+                  {%- unless all_features contains clean_feature -%}
+                    {%- assign all_features = all_features | append: clean_feature | append: ',' -%}
+                  {%- endunless -%}
+                {%- endfor -%}
+              {%- endfor -%}
+              
+              {%- assign unique_features = all_features | split: ',' -%}
+              {%- for feature in unique_features -%}
+                {%- unless feature == blank -%}
+                  <tr>
+                    <td class="comparison-table__feature">{{ feature | strip }}</td>
+                    {%- for block in section.blocks -%}
+                      <td class="comparison-table__cell">
+                        {%- if block.settings.tier_features contains feature -%}
+                          {% render 'icon', icon: 'check', class: 'comparison-table__check' %}
+                        {%- else -%}
+                          <span class="comparison-table__dash">-</span>
+                        {%- endif -%}
+                      </td>
+                    {%- endfor -%}
+                  </tr>
+                {%- endunless -%}
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Tier Pricing",
+  "tag": "section", 
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Choose Your Growing System"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Perfect solutions for every lifestyle"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_comparison",
+      "label": "Show comparison table",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "background-1",
+      "options": [
+        {"value": "accent-1", "label": "Accent 1"},
+        {"value": "accent-2", "label": "Accent 2"},
+        {"value": "background-1", "label": "Background 1"},
+        {"value": "background-2", "label": "Background 2"},
+        {"value": "inverse", "label": "Inverse"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Tier",
+      "settings": [
+        {
+          "type": "select",
+          "id": "tier_level",
+          "label": "Tier Level",
+          "default": "tier_1",
+          "options": [
+            {"value": "tier_1", "label": "Tier 1 - Starter"},
+            {"value": "tier_2", "label": "Tier 2 - Most Popular"},
+            {"value": "tier_3", "label": "Tier 3 - Premium"}
+          ]
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "tier_title",
+          "label": "Tier title",
+          "default": "Starter Kit"
+        },
+        {
+          "type": "text",
+          "id": "tier_subtitle",
+          "label": "Tier subtitle",
+          "default": "Perfect for beginners"
+        },
+        {
+          "type": "richtext",
+          "id": "tier_description",
+          "label": "Tier description",
+          "default": "<p>Everything you need to start growing microgreens at home.</p>"
+        },
+        {
+          "type": "textarea",
+          "id": "tier_features",
+          "label": "Features (comma separated)",
+          "default": "Growing trays, Seeds included, Instruction guide, 7-day growth cycle"
+        },
+        {
+          "type": "checkbox",
+          "id": "tier_badge",
+          "label": "Show badge",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "tier_badge_text",
+          "label": "Badge text",
+          "default": "Most Popular"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Choose This System"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tier Pricing",
+      "blocks": [
+        {
+          "type": "tier",
+          "settings": {
+            "tier_level": "tier_1",
+            "tier_title": "Starter Kit",
+            "tier_subtitle": "Perfect for beginners",
+            "tier_description": "<p>Everything you need to start growing microgreens at home.</p>",
+            "tier_features": "Growing tray, Seeds starter pack, Basic instructions, Manual watering",
+            "button_text": "Get Started"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "tier_level": "tier_2", 
+            "tier_title": "7-Day Grow System",
+            "tier_subtitle": "Most popular choice",
+            "tier_description": "<p>Complete system with everything needed for continuous growing.</p>",
+            "tier_features": "Multiple trays, Premium seed variety, Detailed guide, Growth tracker, Harvesting tools",
+            "tier_badge": true,
+            "tier_badge_text": "Most Popular",
+            "button_text": "Choose This System"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "tier_level": "tier_3",
+            "tier_title": "Smart Grow System", 
+            "tier_subtitle": "Automated growing",
+            "tier_description": "<p>Premium automated system with smart monitoring and controls.</p>",
+            "tier_features": "Automated watering, LED grow lights, Smart monitoring, Mobile app, Premium seeds, Expert support",
+            "button_text": "Go Premium"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

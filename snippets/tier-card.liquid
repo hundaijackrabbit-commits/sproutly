@@ -1,0 +1,105 @@
+{%- comment -%}
+  Renders a tier card for the pricing system
+
+  Accepts:
+  - tier_level: {String} tier_1, tier_2, or tier_3
+  - product: {Object} Shopify product object
+  - tier_title: {String} Title for the tier
+  - tier_subtitle: {String} Subtitle for the tier 
+  - tier_description: {String} Rich text description
+  - tier_features: {String} Comma-separated features
+  - tier_badge: {Boolean} Show badge
+  - tier_badge_text: {String} Badge text
+  - is_featured: {Boolean} Is this the featured tier
+  - show_comparison: {Boolean} Show comparison link
+  - button_text: {String} CTA button text
+
+  Usage:
+  {% render 'tier-card', tier_level: 'tier_2', product: products['7-day-system'], is_featured: true %}
+{%- endcomment -%}
+
+{%- assign tier_class = 'tier-card tier-card--' | append: tier_level -%}
+{%- if is_featured -%}
+  {%- assign tier_class = tier_class | append: ' tier-card--featured' -%}
+{%- endif -%}
+
+<div class="{{ tier_class }}">
+  {%- if tier_badge and tier_badge_text != blank -%}
+    <div class="tier-card__badge">
+      {% render 'badge', text: tier_badge_text, modifier: 'featured' %}
+    </div>
+  {%- endif -%}
+
+  <div class="tier-card__header">
+    {%- if product and product.featured_media -%}
+      <div class="tier-card__image">
+        <img src="{{ product.featured_media | image_url: width: 300 }}" 
+             alt="{{ product.featured_media.alt | escape }}"
+             width="300" height="{{ 300 | divided_by: product.featured_media.aspect_ratio | round }}"
+             loading="lazy">
+      </div>
+    {%- endif -%}
+
+    <div class="tier-card__title-wrapper">
+      <h3 class="tier-card__title h3">{{ tier_title }}</h3>
+      {%- if tier_subtitle != blank -%}
+        <p class="tier-card__subtitle">{{ tier_subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if product and product.price -%}
+      <div class="tier-card__price">
+        <span class="tier-card__price-amount">
+          {%- render 'price', product: product, use_variant: true, show_badges: false -%}
+        </span>
+        {%- if product.compare_at_price > product.price -%}
+          <span class="tier-card__compare-price">
+            {{ product.compare_at_price | money }}
+          </span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="tier-card__content">
+    {%- if tier_description != blank -%}
+      <div class="tier-card__description rte">
+        {{ tier_description }}
+      </div>
+    {%- endif -%}
+
+    {%- if tier_features != blank -%}
+      <div class="tier-card__features">
+        <ul class="tier-card__features-list">
+          {%- assign features_array = tier_features | split: ',' -%}
+          {%- for feature in features_array -%}
+            <li class="tier-card__feature">
+              {% render 'icon', icon: 'check', class: 'tier-card__feature-icon' %}
+              <span class="tier-card__feature-text">{{ feature | strip }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="tier-card__actions">
+    {%- if product -%}
+      {% render 'product-form', 
+        product: product,
+        show_pickup_availability: false,
+        button_text: button_text
+      %}
+    {%- else -%}
+      <a href="/collections/all" class="button button--primary button--full-width">
+        {{ button_text | default: 'Shop Now' }}
+      </a>
+    {%- endif -%}
+
+    {%- if show_comparison -%}
+      <button type="button" class="tier-card__compare-link" data-tier-compare="{{ tier_level }}">
+        Compare Features
+      </button>
+    {%- endif -%}
+  </div>
+</div>

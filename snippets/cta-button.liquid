@@ -1,0 +1,79 @@
+{%- comment -%}
+  Renders a call-to-action button
+
+  Accepts:
+  - label: {String} Button text (required)
+  - link: {String} Button URL (required)
+  - style: {String} Button style: 'primary', 'secondary', 'tertiary' (optional, default: 'primary')
+  - size: {String} Button size: 'small', 'medium', 'large' (optional, default: 'medium')
+  - full_width: {Boolean} Make button full width (optional, default: false)
+  - icon: {String} Icon to display in button (optional)
+  - icon_position: {String} Icon position: 'left', 'right' (optional, default: 'right')
+  - loading: {Boolean} Show loading state (optional, default: false)
+  - disabled: {Boolean} Disable button (optional, default: false)
+  - new_tab: {Boolean} Open link in new tab (optional, default: false)
+  - classes: {String} Additional CSS classes (optional)
+
+  Usage:
+  {% render 'cta-button', label: 'Shop Now', link: '/collections/all', style: 'primary', size: 'large' %}
+{%- endcomment -%}
+
+{%- assign button_style = style | default: 'primary' -%}
+{%- assign button_size = size | default: 'medium' -%}
+{%- assign button_icon_position = icon_position | default: 'right' -%}
+
+{%- assign button_class = 'button' -%}
+{%- assign button_class = button_class | append: ' button--' | append: button_style -%}
+{%- assign button_class = button_class | append: ' button--' | append: button_size -%}
+
+{%- if full_width -%}
+  {%- assign button_class = button_class | append: ' button--full-width' -%}
+{%- endif -%}
+
+{%- if icon != blank -%}
+  {%- assign button_class = button_class | append: ' button--icon button--icon-' | append: button_icon_position -%}
+{%- endif -%}
+
+{%- if loading -%}
+  {%- assign button_class = button_class | append: ' button--loading' -%}
+{%- endif -%}
+
+{%- if disabled -%}
+  {%- assign button_class = button_class | append: ' button--disabled' -%}
+{%- endif -%}
+
+{%- if classes != blank -%}
+  {%- assign button_class = button_class | append: ' ' | append: classes -%}
+{%- endif -%}
+
+<a href="{{ link | escape }}" 
+   class="{{ button_class }}"
+   {% if new_tab %}target="_blank" rel="noopener"{% endif %}
+   {% if disabled %}aria-disabled="true" tabindex="-1"{% endif %}>
+  
+  {%- if icon != blank and button_icon_position == 'left' -%}
+    <span class="button__icon button__icon--left">
+      {% render 'icon', icon: icon %}
+    </span>
+  {%- endif -%}
+
+  <span class="button__text">{{ label | escape }}</span>
+
+  {%- if icon != blank and button_icon_position == 'right' -%}
+    <span class="button__icon button__icon--right">
+      {% render 'icon', icon: icon %}
+    </span>
+  {%- endif -%}
+
+  {%- if loading -%}
+    <span class="button__loading" aria-hidden="true">
+      <span class="button__loading-spinner">
+        <svg viewBox="0 0 20 20" class="spinner">
+          <path d="M10,1 A9,9 0 1,1 1,10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="14.137 14.137" stroke-dashoffset="14.137">
+            <animateTransform attributeName="transform" type="rotate" dur="1s" values="0,10,10;360,10,10" repeatCount="indefinite"/>
+          </path>
+        </svg>
+      </span>
+    </span>
+  {%- endif -%}
+</a>

@@ -1,0 +1,31 @@
+{%- comment -%}
+  Meta tags for SEO and social sharing
+{%- endcomment -%}
+
+<meta property="og:site_name" content="{{ shop.name }}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ page_title }}">
+<meta property="og:type" content="website">
+<meta property="og:description" content="{{ page_description | default: shop.description | default: shop.name }}">
+
+{%- if settings.share_image -%}
+  <meta property="og:image" content="http:{{ settings.share_image | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="https:{{ settings.share_image | image_url: width: 1200 }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+{%- elsif template.name == 'product' and product.featured_media -%}
+  <meta property="og:image" content="http:{{ product.featured_media | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="https:{{ product.featured_media | image_url: width: 1200 }}">
+  <meta property="og:image:width" content="{{ product.featured_media.width }}">
+  <meta property="og:image:height" content="{{ product.featured_media.height }}">
+{%- endif -%}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page_title }}">
+<meta name="twitter:description" content="{{ page_description | default: shop.description | default: shop.name }}">
+
+{%- if template.name == 'product' -%}
+  <meta property="og:type" content="product">
+  <meta property="product:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
+  <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+{%- endif -%}

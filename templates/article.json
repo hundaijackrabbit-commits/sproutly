@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "settings": {
+        "show_date": true,
+        "show_author": false,
+        "show_share_buttons": true,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "related_articles": {
+      "type": "related-articles",
+      "settings": {
+        "heading": "Related Growing Tips",
+        "articles_to_show": 3
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related_articles"
+  ]
+}

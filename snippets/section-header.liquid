@@ -1,0 +1,38 @@
+{%- comment -%}
+  Renders a section header with heading and optional subheading
+
+  Accepts:
+  - heading: {String} Main heading text (required)
+  - subheading: {String} Subheading text (optional)
+  - heading_size: {String} Heading size: 'h1', 'h2', 'h3', 'h4' (optional, default: 'h2')
+  - text_alignment: {String} Text alignment: 'left', 'center', 'right' (optional, default: 'center')
+  - heading_tag: {String} HTML tag for heading: 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' (optional, default: 'h2')
+  - class: {String} Additional CSS classes (optional)
+
+  Usage:
+  {% render 'section-header', heading: 'Our Products', subheading: 'Find the perfect system for you' %}
+  {% render 'section-header', heading: 'About Us', heading_size: 'h1', text_alignment: 'left' %}
+{%- endcomment -%}
+
+{%- assign heading_size_class = heading_size | default: 'h2' -%}
+{%- assign text_align = text_alignment | default: 'center' -%}
+{%- assign heading_tag = heading_tag | default: 'h2' -%}
+
+{%- assign header_class = 'section-header' -%}
+{%- assign header_class = header_class | append: ' text-' | append: text_align -%}
+
+{%- if class != blank -%}
+  {%- assign header_class = header_class | append: ' ' | append: class -%}
+{%- endif -%}
+
+{%- if heading != blank -%}
+  <div class="{{ header_class }}">
+    <{{ heading_tag }} class="section-header__title {{ heading_size_class }}">
+      {{ heading }}
+    </{{ heading_tag }}>
+    
+    {%- if subheading != blank -%}
+      <p class="section-header__subtitle">{{ subheading }}</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}

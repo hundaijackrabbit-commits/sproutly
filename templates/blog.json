@@ -1,0 +1,31 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "layout": "grid",
+        "show_image": true,
+        "image_height": "medium",
+        "show_date": true,
+        "show_author": false,
+        "show_excerpt": false,
+        "show_view_all": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "blog_cta": {
+      "type": "blog-cta",
+      "settings": {
+        "heading": "Start Your Growing Journey",
+        "subheading": "Get expert tips delivered to your inbox",
+        "button_label": "Subscribe",
+        "button_link": "/pages/newsletter"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "blog_cta"
+  ]
+}
