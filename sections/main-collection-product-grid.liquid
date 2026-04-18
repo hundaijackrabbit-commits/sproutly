@@ -1,0 +1,384 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+  assign products_per_page = section.settings.products_per_page
+  assign columns = section.settings.columns_desktop
+  assign columns_mobile = section.settings.columns_mobile
+-%}
+
+{%- paginate collection.products by products_per_page -%}
+  <div class="collection-product-grid gradient color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding" id="ProductGridContainer">
+    {%- unless collection.products.size == 0 -%}
+      <div class="page-width">
+        <div class="collection-product-grid__header">
+          {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+            <facet-filters-form class="facets facets--horizontal small-hide">
+              <form class="facets__form" id="FacetFiltersForm">
+                {%- if section.settings.enable_filtering -%}
+                  {%- unless collection.filters == empty -%}
+                    <div class="facets__wrapper">
+                      <h2 class="facets__heading caption-large">
+                        {{ 'products.facets.filter_by_label' | t }}
+                      </h2>
+                      {%- for filter in collection.filters -%}
+                        {%- case filter.type -%}
+                          {%- when 'boolean' -%}
+                            <div class="facet-checkbox" data-index="{{ forloop.index }}">
+                              <fieldset class="facets__summary">
+                                <legend class="facets__label">{{ filter.label | escape }}</legend>
+                                <input type="checkbox" name="{{ filter_value.param_name }}" value="{{ filter_value.value }}" id="Filter-{{ filter.label | escape }}-{{ forloop.index }}"{% if filter.active_values.size > 0 %} checked{% endif %}>
+                                <label for="Filter-{{ filter.label | escape }}-{{ forloop.index }}">{{ filter.label | escape }}</label>
+                              </fieldset>
+                            </div>
+                          {%- when 'list' -%}
+                            <details class="disclosure-has-popup facets__disclosure" data-index="{{ forloop.index }}">
+                              <summary class="facets__summary">
+                                <div>
+                                  <span>{{ filter.label | escape }} ({{ filter.active_values.size }})</span>
+                                  <span class="summary__icon summary__icon--open">
+                                    {% render 'icon', icon: 'arrow-down' %}
+                                  </span>
+                                  <span class="summary__icon summary__icon--close">
+                                    {% render 'icon', icon: 'close' %}
+                                  </span>
+                                </div>
+                              </summary>
+                              <div class="facets__display">
+                                <div class="facets__header">
+                                  <span class="facets__selected">{{ 'products.facets.filters_selected' | t: count: filter.active_values.size }}</span>
+                                  <facet-remove>
+                                    <a href="{{ filter.url_to_remove }}" class="facets__reset link underlined-link">
+                                      {{ 'products.facets.reset' | t }}
+                                    </a>
+                                  </facet-remove>
+                                </div>
+                                <ul class="facets__list list-unstyled" role="list">
+                                  {%- for filter_value in filter.values -%}
+                                    <li class="facets__item">
+                                      <label for="Filter-{{ filter.label | escape }}-{{ forloop.index }}" class="facet-checkbox{% if filter_value.count == 0 and filter_value.active == false %} facet-checkbox--disabled{% endif %}">
+                                        <input type="checkbox" name="{{ filter_value.param_name }}" value="{{ filter_value.value }}" id="Filter-{{ filter.label | escape }}-{{ forloop.index }}"
+                                          {% if filter_value.active %}checked{% endif %}
+                                          {% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}>
+                                        <svg width="1.6rem" height="1.6rem" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                                          <rect width="16" height="16" stroke="currentColor" fill="none" stroke-width="1"></rect>
+                                        </svg>
+                                        <svg class="icon icon-checkmark" width="1.1rem" height="0.7rem" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                          <path d="m1.5 3.5 2.414 2.414a.5.5 0 0 0 .707 0L9.5 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                        </svg>
+                                        <span aria-hidden="true">{{ filter_value.label | escape }} ({{ filter_value.count }})</span>
+                                        <span class="visually-hidden">{{ filter_value.label | escape }} ({% if filter_value.count == 1 %}{{ 'products.facets.product_count_one' | t: product_count: filter_value.count }}{% else %}{{ 'products.facets.product_count_other' | t: product_count: filter_value.count }}{% endif %})</span>
+                                      </label>
+                                    </li>
+                                  {%- endfor -%}
+                                </ul>
+                              </div>
+                            </details>
+                          {%- when 'price_range' -%}
+                            <details class="disclosure-has-popup facets__disclosure" data-index="{{ forloop.index }}">
+                              <summary class="facets__summary">
+                                <div>
+                                  <span>{{ filter.label | escape }}</span>
+                                  <span class="summary__icon summary__icon--open">
+                                    {% render 'icon', icon: 'arrow-down' %}
+                                  </span>
+                                  <span class="summary__icon summary__icon--close">
+                                    {% render 'icon', icon: 'close' %}
+                                  </span>
+                                </div>
+                              </summary>
+                              <div class="facets__display">
+                                <div class="facets__header">
+                                  {%- assign max_price_amount = filter.range_max | money | strip_html | escape -%}
+                                  <span class="facets__selected">{{ "products.facets.max_price" | t: price: max_price_amount }}</span>
+                                  <facet-remove>
+                                    <a href="{{ filter.url_to_remove }}" class="facets__reset link underlined-link">{{ 'products.facets.reset' | t }}</a>
+                                  </facet-remove>
+                                </div>
+                                <price-range class="facets__price">
+                                  <span class="field-currency">{{ cart.currency.symbol }}</span>
+                                  <div class="field">
+                                    <input class="field__input" name="{{ filter.min_value.param_name }}" id="Filter-{{ filter.label | escape }}-GTE"
+                                      {%- if filter.min_value.value -%}
+                                        {%- if uses_comma_decimals -%}
+                                          value="{{ filter.min_value.value | money_without_currency | replace: '.', ',' }}"
+                                        {%- else -%}
+                                          value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                                        {%- endif -%}
+                                      {%- endif -%}
+                                      type="number"
+                                      placeholder="0"
+                                      min="0"
+                                      max="{{ filter.range_max | money_without_currency | replace: ',', '' }}">
+                                    <label class="field__label" for="Filter-{{ filter.label | escape }}-GTE">{{ 'products.facets.from' | t }}</label>
+                                  </div>
+                                  <span class="field-currency">{{ cart.currency.symbol }}</span>
+                                  <div class="field">
+                                    <input class="field__input" name="{{ filter.max_value.param_name }}" id="Filter-{{ filter.label | escape }}-LTE"
+                                      {%- if filter.max_value.value -%}
+                                        {%- if uses_comma_decimals -%}
+                                          value="{{ filter.max_value.value | money_without_currency | replace: '.', ',' }}"
+                                        {%- else -%}
+                                          value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                                        {%- endif -%}
+                                      {%- endif -%}
+                                      type="number"
+                                      min="0"
+                                      placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                      max="{{ filter.range_max | money_without_currency | replace: ',', '' }}">
+                                    <label class="field__label" for="Filter-{{ filter.label | escape }}-LTE">{{ 'products.facets.to' | t }}</label>
+                                  </div>
+                                </price-range>
+                              </div>
+                            </details>
+                        {%- endcase -%}
+                      {%- endfor -%}
+                    </div>
+                  {%- endunless -%}
+                {%- endif -%}
+
+                {%- if section.settings.enable_sorting -%}
+                  <div class="facet-filters sorting caption">
+                    <div class="facet-filters__field">
+                      <h2 class="facet-filters__label caption-large text-body">
+                        <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
+                      </h2>
+                      <div class="select">
+                        <select name="sort_by" class="facet-filters__sort select__select caption-large" id="SortBy" aria-describedby="a11y-refresh-page-message">
+                          {%- for option in collection.sort_options -%}
+                            <option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected="selected"{% endif %}>{{ option.name | escape }}</option>
+                          {%- endfor -%}
+                        </select>
+                        {% render 'icon', icon: 'arrow-down' %}
+                      </div>
+                    </div>
+                  </div>
+                {%- endif -%}
+              </form>
+            </facet-filters-form>
+          {%- endif -%}
+
+          <div class="collection-product-grid__results" id="product-grid">
+            <h2 class="visually-hidden">{{ 'products.facets.product_list' | t }}</h2>
+            <div class="collection__loading-spinner loading-overlay gradient">
+              <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+              </svg>
+            </div>
+            <ul class="product-grid contains-card contains-card--product contains-card--standard grid grid--{{ columns_mobile }}-col-tablet-down grid--{{ columns }}-col-desktop" role="list">
+              {%- for product in collection.products -%}
+                <li class="grid__item">
+                  {% render 'product-card',
+                    card_product: product,
+                    media_aspect_ratio: section.settings.image_ratio,
+                    show_secondary_image: section.settings.show_secondary_image,
+                    show_vendor: section.settings.show_vendor,
+                    show_rating: section.settings.show_rating,
+                    show_quick_add: section.settings.show_quick_add,
+                    section_id: section.id
+                  %}
+                </li>
+              {%- endfor -%}
+            </ul>
+
+            {%- if paginate.pages > 1 -%}
+              {% render 'pagination', paginate: paginate, anchor: '' %}
+            {%- endif -%}
+          </div>
+        </div>
+
+        {% comment %} App blocks for product grid apps {% endcomment %}
+        <div class="collection-product-grid__app-blocks">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when '@app' -%}
+                <div class="collection-product-grid__app-block" {{ block.shopify_attributes }}>
+                  {% render block %}
+                </div>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- else -%}
+      <div class="collection-product-grid--empty page-width" id="main-collection-product-grid" data-id="{{ section.id }}">
+        <div class="loading-overlay gradient"></div>
+        <div class="title-wrapper center">
+          <h2 class="title title--primary">
+            {{ 'sections.collection_template.empty' | t }}<br>
+            {{ 'sections.collection_template.use_fewer_filters_html' | t: link: collection.url, class: "underlined-link link" }}
+          </h2>
+        </div>
+      </div>
+    {%- endunless -%}
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection product grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 50,
+      "step": 4,
+      "default": 16,
+      "label": "Products per page"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ],
+      "default": "2",
+      "label": "Number of columns on mobile"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        }
+      ],
+      "default": "adapt",
+      "label": "Image ratio"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "Show second image on hover"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "Show vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "Show product rating",
+      "info": "To display a rating, add a product rating app. [Learn more](https://help.shopify.com/manual/online-store/themes/theme-structure/page-types#product-grid-section-settings)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "Enable filtering"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "default": true,
+      "label": "Enable sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "default": false,
+      "label": "Show quick add"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        },
+        {
+          "value": "inverse",
+          "label": "Text on dark"
+        }
+      ],
+      "default": "background-1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

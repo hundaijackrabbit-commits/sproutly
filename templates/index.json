@@ -3,58 +3,252 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "heading": "Grow Fresh Microgreens at Home",
-        "subheading": "From seed to harvest in just 7 days with our complete growing systems",
-        "button_label": "Shop Now",
-        "button_link": "/collections/all",
+        "heading": "Fresh Microgreens in Your Room, Ready in 7 Days",
+        "subheading": "Transform your space into a micro-farm with our simple, proven growing systems. No soil, no mess, no experience needed.",
+        "button_label": "Start Growing Today",
+        "button_link": "/collections/growing-systems",
+        "button_label_2": "See How It Works",
+        "button_link_2": "#how-it-works",
         "image_desktop": "",
         "image_mobile": "",
+        "height": "large",
         "text_alignment": "center",
-        "color_scheme": "background-1"
+        "color_scheme": "background-1",
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "how_it_works": {
       "type": "how-it-works",
       "settings": {
-        "heading": "How It Works",
-        "subheading": "Simple steps to fresh microgreens"
-      }
+        "heading": "Fresh Food in 3 Simple Steps",
+        "subheading": "From complete beginner to microgreen master in one week",
+        "button_label": "Choose Your System",
+        "button_link": "/collections/growing-systems",
+        "color_scheme": "background-2",
+        "padding_top": 60,
+        "padding_bottom": 60
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "step_number": "1",
+            "icon": "seed",
+            "heading": "Add Seeds & Water",
+            "text": "<p>Place your seeds in the growing tray, add clean water, and set in indirect light. Takes 2 minutes.</p>"
+          }
+        },
+        "step_2": {
+          "type": "step", 
+          "settings": {
+            "step_number": "2",
+            "icon": "water",
+            "heading": "Watch Them Grow",
+            "text": "<p>Water daily and watch your microgreens sprout and grow. Our systems keep the perfect moisture level automatically.</p>"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "step_number": "3",
+            "icon": "harvest",
+            "heading": "Harvest & Enjoy",
+            "text": "<p>In 7 days, cut your fresh microgreens and enjoy the most nutrient-dense food possible, right from your room.</p>"
+          }
+        }
+      },
+      "block_order": ["step_1", "step_2", "step_3"]
     },
     "tier_pricing": {
       "type": "tier-pricing",
       "settings": {
         "heading": "Choose Your Growing System",
-        "subheading": "Perfect solutions for every lifestyle",
+        "subheading": "Start small or go big - every system delivers fresh microgreens in 7 days",
         "show_comparison": true,
-        "featured_tier": "tier_2"
-      }
+        "featured_tier": "tier_2",
+        "color_scheme": "background-1",
+        "padding_top": 60,
+        "padding_bottom": 40
+      },
+      "blocks": {
+        "tier_1": {
+          "type": "tier",
+          "settings": {
+            "tier_level": "tier_1",
+            "tier_title": "Sprout Starter",
+            "tier_subtitle": "Perfect first system",
+            "tier_description": "<p><strong>Simple germination tray system</strong> - Everything you need to grow your first batch of fresh microgreens. Great for testing the waters!</p>",
+            "tier_features": "Basic growing tray, Seed starter pack, Simple instructions, Manual watering, Perfect for beginners",
+            "tier_badge": false,
+            "button_text": "Start Simple - $11"
+          }
+        },
+        "tier_2": {
+          "type": "tier",
+          "settings": {
+            "tier_level": "tier_2", 
+            "tier_title": "7-Day Grow System",
+            "tier_subtitle": "Most popular choice",
+            "tier_description": "<p><strong>Stackable multi-level system</strong> - Grow multiple varieties at once with our space-saving design. This is our customer favorite for a reason!</p>",
+            "tier_features": "Stackable growing trays, Multiple seed varieties, Detailed growing guide, Water circulation system, Covers for optimal growth, Most popular choice",
+            "tier_badge": true,
+            "tier_badge_text": "Most Popular",
+            "button_text": "Get Growing - $15"
+          }
+        },
+        "tier_3": {
+          "type": "tier",
+          "settings": {
+            "tier_level": "tier_3",
+            "tier_title": "Smart Grow Pro", 
+            "tier_subtitle": "Fully automated system",
+            "tier_description": "<p><strong>WiFi-enabled smart garden</strong> - Complete automation with LED grow lights, auto-watering, and smartphone control. Set it and forget it!</p>",
+            "tier_features": "Smart WiFi control, LED grow lights, Automatic watering pump, Mobile app monitoring, Premium seed varieties, Complete automation, Expert support included",
+            "button_text": "Go Pro - $113"
+          }
+        }
+      },
+      "block_order": ["tier_1", "tier_2", "tier_3"]
     },
     "product_comparison": {
       "type": "product-comparison",
       "settings": {
-        "heading": "Compare Our Systems",
-        "show_tier_badges": true
+        "heading": "Compare All Growing Systems",
+        "subheading": "Find the perfect system for your space, experience, and goals",
+        "show_tier_badges": true,
+        "color_scheme": "background-2",
+        "padding_top": 40,
+        "padding_bottom": 60
       }
     },
     "testimonials": {
       "type": "testimonials",
       "settings": {
-        "heading": "What Our Customers Say",
-        "show_stars": true
+        "heading": "Join 10,000+ Happy Home Growers",
+        "subheading": "Real customers sharing their microgreen success stories",
+        "layout": "carousel",
+        "columns_desktop": 3,
+        "show_stars": true,
+        "color_scheme": "background-1",
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
     "faq": {
       "type": "faq",
       "settings": {
-        "heading": "Frequently Asked Questions"
-      }
+        "heading": "Everything You Need to Know",
+        "subheading": "New to microgreens? We've got you covered with the most common questions",
+        "open_first": true,
+        "contact_text": "Still have questions? We're here to help!",
+        "contact_button_label": "Get Growing Support",
+        "contact_button_link": "/pages/contact",
+        "color_scheme": "background-2",
+        "padding_top": 60,
+        "padding_bottom": 60
+      },
+      "blocks": {
+        "faq_1": {
+          "type": "question",
+          "settings": {
+            "question": "How long does it really take to grow microgreens?",
+            "answer": "<p><strong>7-14 days from seed to harvest.</strong> Most varieties are ready in exactly 7 days. Pea shoots and sunflower might take up to 10 days. You'll see sprouts within 24-48 hours!</p>"
+          }
+        },
+        "faq_2": {
+          "type": "question",
+          "settings": {
+            "question": "What's the difference between the growing systems?",
+            "answer": "<p><strong>Sprout Starter ($11):</strong> Basic tray, perfect for beginners<br><strong>7-Day System ($15):</strong> Stackable trays, grow multiple varieties<br><strong>Smart Grow Pro ($113):</strong> Fully automated with lights and app control</p>"
+          }
+        },
+        "faq_3": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need any gardening experience?",
+            "answer": "<p><strong>Absolutely not!</strong> Our systems are designed for complete beginners. If you can make coffee, you can grow microgreens. Each system comes with step-by-step instructions and seed varieties that are nearly impossible to mess up.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "question",
+          "settings": {
+            "question": "How much space do I need?",
+            "answer": "<p><strong>Countertop space is perfect.</strong> All systems fit on a standard kitchen counter. The Sprout Starter needs about 8x6 inches, the 7-Day System stacks vertically to save space, and the Smart Grow Pro is about 12x8 inches.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "question",
+          "settings": {
+            "question": "What can I grow and how much will I get?",
+            "answer": "<p><strong>Tons of varieties!</strong> Radish, broccoli, pea shoots, sunflower, arugula, kale, and more. Each tray produces enough microgreens for 4-6 servings. The 7-Day System can produce a week's worth of fresh greens!</p>"
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_5"]
     },
     "email_capture": {
       "type": "email-capture",
       "settings": {
-        "heading": "Get Growing Tips & Updates",
-        "subheading": "Join our community of home growers",
-        "button_label": "Subscribe"
+        "layout": "center",
+        "heading": "Get the Microgreen Mastery Guide",
+        "subheading": "Join 25,000+ growers getting fresh tips delivered weekly",
+        "text": "<p>Get our complete beginner's guide plus weekly growing tips, variety spotlights, and exclusive discounts on new products.</p>",
+        "placeholder": "Enter your email address",
+        "button_label": "Send Me the Guide",
+        "success_message": "Welcome to the community! Check your email for the guide.",
+        "benefits": "Weekly growing tips, Exclusive member discounts, New variety announcements, Troubleshooting support",
+        "show_privacy_text": true,
+        "privacy_text": "100% spam-free. Unsubscribe anytime with one click.",
+        "color_scheme": "accent-1",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "blog_preview": {
+      "type": "blog-preview",
+      "settings": {
+        "blog": "",
+        "heading": "Fresh Growing Tips & Guides",
+        "subheading": "Learn from our community of expert growers",
+        "post_limit": 3,
+        "columns_desktop": 3,
+        "show_image": true,
+        "show_tags": true,
+        "show_excerpt": true,
+        "show_date": true,
+        "show_author": false,
+        "show_read_more": true,
+        "read_more_text": "Read Guide",
+        "show_view_all": true,
+        "view_all_text": "See All Growing Tips",
+        "color_scheme": "background-2",
+        "padding_top": 60,
+        "padding_bottom": 40
+      }
+    },
+    "final_cta": {
+      "type": "cta",
+      "settings": {
+        "heading": "Start Growing Fresh Food Today",
+        "subheading": "Join thousands of home growers already enjoying fresh, nutrient-dense microgreens",
+        "text": "<p>Every day you wait is another day without the freshest, most nutritious food possible. Our systems are proven, simple, and come with everything you need to succeed.</p>",
+        "text_alignment": "center",
+        "button_label": "Shop Growing Systems",
+        "button_link": "/collections/growing-systems",
+        "button_style": "primary",
+        "button_label_2": "Read Success Stories",
+        "button_link_2": "/pages/testimonials",
+        "button_style_2": "secondary",
+        "button_size": "large",
+        "show_tier_links": true,
+        "tier_1_link": "/products/sprout-starter",
+        "tier_2_link": "/products/7-day-grow-system", 
+        "tier_3_link": "/products/smart-grow-pro",
+        "featured_badge_text": "Most Popular",
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 80
       }
     }
   },
@@ -65,6 +259,8 @@
     "product_comparison",
     "testimonials",
     "faq",
-    "email_capture"
+    "email_capture",
+    "blog_preview",
+    "final_cta"
   ]
 }

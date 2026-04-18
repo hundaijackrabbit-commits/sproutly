@@ -358,6 +358,10 @@ SproutlyTheme.animations = {
   },
 
   applyAnimation: (element, type) => {
+    // Use CSS classes for better performance
+    element.classList.add('animate--revealed');
+    
+    // Fallback to JS animations if needed
     const animations = {
       'fade-in': [
         { opacity: 0, transform: 'translateY(20px)' },
@@ -377,12 +381,15 @@ SproutlyTheme.animations = {
       ]
     };
 
-    const keyframes = animations[type] || animations['fade-in'];
-    
-    SproutlyTheme.utils.animate(element, keyframes, {
-      duration: 600,
-      easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
-    });
+    // Only use JS animation if CSS classes aren't working
+    if (!element.classList.contains('animate--revealed')) {
+      const keyframes = animations[type] || animations['fade-in'];
+      
+      SproutlyTheme.utils.animate(element, keyframes, {
+        duration: 600,
+        easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+    }
   }
 };
 
